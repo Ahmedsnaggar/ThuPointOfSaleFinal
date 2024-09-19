@@ -11,19 +11,25 @@ namespace ThuPointOfSaleFinal.App.Controllers
     {
         private IGenericRepository<Product> _repository;
         private IGenericRepository<Category> _repositoryCategory;
-        public ProductsController(IGenericRepository<Product> repository, IGenericRepository<Category> repositoryCategory)
+        private IWebHostEnvironment _environment;
+        private IUploadFile _file;
+        public ProductsController(IGenericRepository<Product> repository, IGenericRepository<Category> repositoryCategory, IWebHostEnvironment environment, IUploadFile file)
         {
             _repository = repository;
             _repositoryCategory = repositoryCategory;
+            _environment = environment;
+            _file = file;
         }
 
         // GET: ProductsController
-        public async Task<ActionResult> Index()
+        public async Task<ActionResult> Index(string search = "")
         {
-            //var products = from p in _db.Products
-            //               join c in _db.Categories on p.categoryId equals c.Id
-            //               select p;
             var products = await _repository.GetAllAsync(includes: new[] { "category" });
+            if(search!= "")
+            {
+                ViewBag.Search = search;
+                products = products.Where(p=> p.ProductName.ToLower().Contains(search.ToLower()));
+            }
             return View(products);
         }
 
@@ -48,6 +54,10 @@ namespace ThuPointOfSaleFinal.App.Controllers
         {
             try
             {
+                if (item.ImageFile != null) {
+                   string Image =  await _file.UploadFileAsync("\\Images\\ProductImages", item.ImageFile);
+                    item.ProductImage = Image;
+                }                
                 await _repository.AddAsync(item);
                 return RedirectToAction(nameof(Index));
             }
@@ -61,7 +71,7 @@ namespace ThuPointOfSaleFinal.App.Controllers
         public async Task<ActionResult> Edit(int id)
         {
             var product = await _repository.GetAsync(id);
-            return View("CreateProduct", product);
+            return View("EditProduct", product);
         }
 
         // POST: ProductsController/Edit/5
@@ -71,12 +81,17 @@ namespace ThuPointOfSaleFinal.App.Controllers
         {
             try
             {
+                if (item.ImageFile != null)
+                {
+                    string Image = await _file.UploadFileAsync("\\Images\\ProductImages", item.ImageFile);
+                    item.ProductImage = Image;
+                }
                 await _repository.UpdateAsync(item);
                 return RedirectToAction(nameof(Index));
             }
             catch
             {
-                return View("CreateProduct");
+                return View("EditProduct");
             }
         }
 

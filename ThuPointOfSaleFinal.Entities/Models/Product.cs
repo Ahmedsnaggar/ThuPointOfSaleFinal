@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.AspNetCore.Http;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ThuPointOfSaleFinal.Entities.Models
@@ -16,5 +17,7 @@ namespace ThuPointOfSaleFinal.Entities.Models
         public string? ProductImage { get; set; }
         [NotMapped]
         public IList<Category> GategoriesList { get; set; }
+        [NotMapped]
+        public IFormFile? ImageFile { get; set; }
     }
 }

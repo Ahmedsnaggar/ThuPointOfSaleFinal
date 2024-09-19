@@ -15,6 +15,7 @@ builder.Services.AddDbContext<MyDbContext>(opt =>
 
 builder.Services.AddScoped<IStoreRepository, StoreRepository>();
 builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
+builder.Services.AddScoped<IUploadFile,  UploadFile>();
 
 var app = builder.Build();
 

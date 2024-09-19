@@ -1,0 +1,25 @@
+﻿@model ThuPointOfSaleFinal.Entities.Models.Product
+
+<div class="col-md-4">
+    <div class="card mb-2">
+        <div calss="card-header">
+            <h4>@Model.ProductName</h4>
+            <h6>Category : @Model.category.CategoryName // Price : @Model.DefaultPrice</h6>
+        </div>
+        <div class="card-body">
+            @if (Model.ProductImage == null || Model.ProductImage == "")
+            {
+                <img src="\Images\ProductImages\Noimage.jpg" alt="No Image" width="100%" height="200px" />
+            }
+            else
+            {
+                <img src="@Model.ProductImage" alt="No Image" width="100%" height="200px" />
+            }
+        </div>
+        <div class="card-footer text-center">
+            @Html.ActionLink("Edit", "Edit", new { id = Model.Id }, new { @class = "btn btn-primary" }) |
+            @Html.ActionLink("Details", "Details", new { id = Model.Id }, new { @class = "btn btn-primary" }) |
+            @Html.ActionLink("Delete", "Delete", new { id = Model.Id }, new { @class = "btn btn-danger" })
+        </div>
+    </div>
+</div>
