@@ -32,6 +32,16 @@ namespace ThuPointOfSaleFinal.App.Controllers
             }
             return View(products);
         }
+        public async Task<ActionResult> SearchByAjax(string search = "")
+        {
+            var products = await _repository.GetAllAsync(includes: new[] { "category" });
+            if (search != "")
+            {
+                ViewBag.Search = search;
+                products = products.Where(p => p.ProductName.ToLower().Contains(search.ToLower()));
+            }
+            return PartialView("_ProductsCards", products);
+        }
 
         // GET: ProductsController/Details/5
         public ActionResult Details(int id)

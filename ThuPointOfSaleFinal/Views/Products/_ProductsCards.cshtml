@@ -1,25 +1,27 @@
-﻿@model ThuPointOfSaleFinal.Entities.Models.Product
-
+﻿@model IEnumerable<ThuPointOfSaleFinal.Entities.Models.Product>
+@foreach (var item in Model) 
+{
 <div class="col-md-4">
     <div class="card mb-2">
         <div calss="card-header">
-            <h4>@Model.ProductName</h4>
-            <h6>Category : @Model.category.CategoryName // Price : @Model.DefaultPrice</h6>
+                <h4>@item.ProductName</h4>
+                <h6>Category : @item.category.CategoryName // Price : @item.DefaultPrice</h6>
         </div>
         <div class="card-body">
-            @if (Model.ProductImage == null || Model.ProductImage == "")
+                @if (item.ProductImage == null || item.ProductImage == "")
             {
                 <img src="\Images\ProductImages\Noimage.jpg" alt="No Image" width="100%" height="200px" />
             }
             else
             {
-                <img src="@Model.ProductImage" alt="No Image" width="100%" height="200px" />
+                    <img src="@item.ProductImage" alt="No Image" width="100%" height="200px" />
             }
         </div>
         <div class="card-footer text-center">
-            @Html.ActionLink("Edit", "Edit", new { id = Model.Id }, new { @class = "btn btn-primary" }) |
-            @Html.ActionLink("Details", "Details", new { id = Model.Id }, new { @class = "btn btn-primary" }) |
-            @Html.ActionLink("Delete", "Delete", new { id = Model.Id }, new { @class = "btn btn-danger" })
+                @Html.ActionLink("Edit", "Edit", new { id = item.Id }, new { @class = "btn btn-primary" }) |
+                @Html.ActionLink("Details", "Details", new { id = item.Id }, new { @class = "btn btn-primary" }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.Id }, new { @class = "btn btn-danger" })
         </div>
     </div>
 </div>
+}

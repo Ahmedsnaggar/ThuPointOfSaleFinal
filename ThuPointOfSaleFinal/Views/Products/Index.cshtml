@@ -3,6 +3,7 @@
 @{
     ViewData["Title"] = "Products";
 }
+
 <div class="row">
     <div class="col-md-6"><h1>Products</h1></div>
     
@@ -25,13 +26,38 @@
     </div>
 </form>
 <hr />
+<label class="control-label">Search With ajax</label>
+<input class="form-control" type="text" id="livesearchtags" placeholder="Search in products With ajax" value="@ViewBag.Search" autocomplete="off" />
+<hr />
 
-<div class="row">
-@foreach (var item in Model) 
-{
-    <partial name="_ProductsCards" model="item"/>
-}
+<div class="row" id="productcards">
+
+    <partial name="_ProductsCards" model="Model"/>
+
 </div>
+@section Scripts {
+<script>
+
+        $('#livesearchtags').on('keyup', function(){
+            liveSearch();
+        })
+    function liveSearch(){
+        debugger
+        let vlaue = $('#livesearchtags').val();
+        $.ajax(
+            {
+                type:"Get",
+                url: '@Url.Action("SearchByAjax", "Products")',
+                    data: { search: vlaue },
+                datatype:"html",
+                success: function (data) {
+                    $('#productcards').html(data);
+                }
+            }
+        )
+    }
+</script>
+}
 @* <table class="table">
     <thead>
         <tr>

@@ -1,9 +1,10 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using ThuPointOfSaleFinal.Entities.Models;
 
 namespace ThuPointOfSaleFinal.App.Models
 {
-    public class MyDbContext : DbContext
+    public class MyDbContext : IdentityDbContext<AppUser>
     {
         public MyDbContext(DbContextOptions<MyDbContext> options) : base(options)
         {
