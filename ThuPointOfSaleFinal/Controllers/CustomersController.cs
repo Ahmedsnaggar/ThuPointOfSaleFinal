@@ -1,18 +1,20 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using ThuPointOfSaleFinal.App.Interfaces;
 using ThuPointOfSaleFinal.Entities.Models;
 
 namespace ThuPointOfSaleFinal.App.Controllers
 {
+    [Authorize(Roles ="AdminRole")]
     public class CustomersController : Controller
     {
         private IGenericRepository<Customer> _customerRepository;
-
         public CustomersController(IGenericRepository<Customer> customerRepository)
         {
             _customerRepository = customerRepository;
         }
-
+        [AllowAnonymous]
+        [Authorize(Roles = "AdminRole, UserRole")]
         // GET: CustomersController
         public async Task<ActionResult> Index()
         {

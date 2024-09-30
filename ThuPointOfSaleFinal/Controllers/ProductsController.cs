@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ThuPointOfSaleFinal.App.Interfaces;
@@ -48,7 +49,7 @@ namespace ThuPointOfSaleFinal.App.Controllers
         {
             return View();
         }
-
+        [Authorize]
         // GET: ProductsController/Create
         public async Task<ActionResult> Create()
         {
@@ -56,7 +57,7 @@ namespace ThuPointOfSaleFinal.App.Controllers
             var prod = new Product() { GategoriesList = categories.ToList() };
             return View(prod);
         }
-
+        [Authorize]
         // POST: ProductsController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -76,14 +77,14 @@ namespace ThuPointOfSaleFinal.App.Controllers
                 return View();
             }
         }
-
+        [Authorize]
         // GET: ProductsController/Edit/5
         public async Task<ActionResult> Edit(int id)
         {
             var product = await _repository.GetAsync(id);
             return View("EditProduct", product);
         }
-
+        [Authorize]
         // POST: ProductsController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -104,14 +105,14 @@ namespace ThuPointOfSaleFinal.App.Controllers
                 return View("EditProduct");
             }
         }
-
+        [Authorize]
         // GET: ProductsController/Delete/5
         public async Task<ActionResult> Delete(int id)
         {
             var product = await _repository.GetAsync(id);
             return View("DeleteProduct", product);
         }
-
+        [Authorize]
         // POST: ProductsController/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]

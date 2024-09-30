@@ -23,6 +23,10 @@ builder.Services.AddIdentity<AppUser, IdentityRole>(opt =>
     opt.Password.RequireUppercase = false;
 }).AddEntityFrameworkStores<MyDbContext>().AddDefaultTokenProviders();
 
+builder.Services.ConfigureApplicationCookie(opt=>
+{
+    opt.AccessDeniedPath = new PathString("/Account/AccessDeniedNew");
+});
 builder.Services.AddScoped<IStoreRepository, StoreRepository>();
 builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
 builder.Services.AddScoped<IUploadFile,  UploadFile>();

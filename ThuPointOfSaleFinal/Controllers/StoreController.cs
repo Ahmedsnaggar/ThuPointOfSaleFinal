@@ -1,10 +1,12 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using ThuPointOfSaleFinal.App.Interfaces;
 using ThuPointOfSaleFinal.Entities.Models;
 
 namespace ThuPointOfSaleFinal.App.Controllers
 {
+    [Authorize]
     public class StoreController : Controller
     {
         private IGenericRepository<Store> _storeRepository;

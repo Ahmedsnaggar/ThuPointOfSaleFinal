@@ -8,7 +8,9 @@
             <a class="nav-link text-dark">Hello, @User.Identity.Name</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Logout</a>
+            <form asp-action="logout" asp-controller="account" method="post">
+                <button type="submit" class="btn btn-danger">Logout</button>
+            </form>
         </li>
     }
     else
@@ -17,7 +19,7 @@
             <a class="nav-link text-dark" asp-area="" asp-controller="account" asp-action="register">Regiater</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Login</a>
+            <a class="nav-link text-dark" asp-area="" asp-controller="account" asp-action="login">Login</a>
         </li>
         }    
 </ul>

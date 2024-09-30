@@ -1,12 +1,11 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using ThuPointOfSaleFinal.App.Interfaces;
-using ThuPointOfSaleFinal.App.Models;
 using ThuPointOfSaleFinal.Entities.Models;
-using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authorization;
 
 namespace ThuPointOfSaleFinal.App.Controllers
 {
+    [Authorize]
     public class CategoriesController : Controller
     {
         private IGenericRepository<Category> _categoryRepository;
@@ -14,7 +13,7 @@ namespace ThuPointOfSaleFinal.App.Controllers
         {
             _categoryRepository = categoryRepository;
         }
-
+        [AllowAnonymous]
         // GET: CategoriesController
         public async Task<ActionResult> Index()
         {

@@ -32,6 +32,8 @@ namespace ThuPointOfSaleFinal.App.Controllers
                var result =  await _userManager.CreateAsync(newuser, model.Password);
                 if (result.Succeeded) 
                 {
+                    await _userManager.AddToRoleAsync(newuser, "UserRole");
+                    await _signInManager.SignInAsync(newuser, isPersistent: false);
                     return RedirectToAction("Index", "Home");
                 }
                 foreach (var item in result.Errors) {
@@ -39,6 +41,44 @@ namespace ThuPointOfSaleFinal.App.Controllers
                 }
             }
             return View(model);
+        }
+        public IActionResult Login()
+        {
+            return View();
+        }
+        [HttpPost]
+        public async Task<IActionResult> Login(LoginViewModel model)
+        {
+            if(ModelState.IsValid)
+            {
+                var user = await _userManager.FindByNameAsync(model.UserName);
+                if (user == null)
+                {
+                    ModelState.AddModelError(string.Empty, "User not found");
+                    return View(model);
+                }
+                var result = await _signInManager.PasswordSignInAsync(user, model.Password, model.RememberMe, false);
+                if(result.Succeeded)
+                {
+                    return RedirectToAction("index", "home");
+                }
+                ModelState.AddModelError(string.Empty, "Password is not correct");
+            }
+            return View(model);
+        }
+        [HttpPost]
+        public async Task<IActionResult> Logout()
+        {
+            await _signInManager.SignOutAsync();
+            return RedirectToAction("index", "home");
+        }
+        public IActionResult AccessDenied()
+        {
+            return View();
+        }
+        public IActionResult AccessDeniedNew()
+        {
+            return View();
         }
     }
 }

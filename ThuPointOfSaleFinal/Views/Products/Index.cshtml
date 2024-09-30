@@ -7,11 +7,15 @@
 <div class="row">
     <div class="col-md-6"><h1>Products</h1></div>
     
-    <div class="col-md-6">
-        <div class=" float-end btn btn-success">
-        <a asp-action="Create" style="text-decoration:none; color:white"><h3>New</h3></a>
+    @if (User.Identity.IsAuthenticated)
+    {
+        <div class="col-md-6">
+            <div class=" float-end btn btn-success">
+                <a asp-action="Create" style="text-decoration:none; color:white"><h3>New</h3></a>
+            </div>
         </div>
-    </div>
+    }
+   
 </div>
 <hr />
 <form asp-action="index" method="get">
